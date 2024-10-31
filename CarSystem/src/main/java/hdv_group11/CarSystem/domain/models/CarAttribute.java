@@ -23,4 +23,6 @@ public class CarAttribute {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "attribute_id")
     private Attribute attribute;
+
+    private String value;
 }

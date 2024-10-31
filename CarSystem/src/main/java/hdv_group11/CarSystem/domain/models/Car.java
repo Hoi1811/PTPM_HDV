@@ -1,5 +1,6 @@
 package hdv_group11.CarSystem.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,8 +19,10 @@ public class Car extends BaseEntity{
 
     private String name;
 
-    @Column(name = "year_manufacturer", length = 4)
-    private int yearManufacturer;
+    @Column(name = "year_manufacture", length = 4)
+    private int yearManufacture;
+
+    private String model;
 
     private String price;
 
