@@ -20,4 +20,5 @@ public interface ICarService {
     Car createCarDetail(AddCarDetailsRequestDTO addCarDetailsRequestDTO);
     Car updateCar(UpdateCarRequestDTO updateCarRequestDTO);
     void deleteCar(int id);
+    Long convertPriceById(int id);
 }
