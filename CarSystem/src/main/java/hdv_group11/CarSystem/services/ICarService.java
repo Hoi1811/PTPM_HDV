@@ -13,12 +13,20 @@ import java.util.List;
 
 public interface ICarService {
     CarResponseDTO getCar(int id);
+
     Page<CarResponseDTO> getAllCars(PageRequest pageRequest);
+
     CarDetailResponseDTO getCarDetail(int id);
+
     List<CarDetailResponseDTO> getCarDetailList(List<Integer> ids);
+
     Car createCar(AddCarRequestDTO addCarRequestDTO);
+
     Car createCarDetail(AddCarDetailsRequestDTO addCarDetailsRequestDTO);
+
     Car updateCar(UpdateCarRequestDTO updateCarRequestDTO);
+
     void deleteCar(int id);
+
     Long convertPriceById(int id);
 }

@@ -171,7 +171,7 @@ public class CarService implements ICarService {
             if (baseNumbers.containsKey(word)) {
                 currentValue += baseNumbers.get(word);
             } else if (multipliers.containsKey(word)) {
-                currentValue *= multipliers.get(word);
+                currentValue = currentValue * multipliers.get(word);
                 total += currentValue;
                 currentValue = 0;
             }
