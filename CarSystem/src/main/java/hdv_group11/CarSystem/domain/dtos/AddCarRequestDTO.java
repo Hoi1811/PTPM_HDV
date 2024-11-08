@@ -13,6 +13,7 @@ public record AddCarRequestDTO(
         int yearManufacture,
 
         String model,
-        String price
+        String price,
+        ManufacturerRequestDTO manufacturer
 )
 {}

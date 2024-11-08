@@ -10,9 +10,12 @@ import hdv_group11.CarSystem.services.ICarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,6 +24,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarController {
     private final ICarService iCarService;
+
     @GetMapping("")
     public ResponseEntity<CarListResponseDTO> getAllCars(
         @RequestParam("page") int page,
@@ -39,6 +43,22 @@ public class CarController {
                 .build()
         );
     }
+    @GetMapping("searchCar")
+    public ResponseEntity<?> searchCarByNameOrManufacturer(
+            @RequestParam("keyword") String keyword,
+            @RequestParam("page") int page,
+            @RequestParam("limit") int limit,
+            @RequestParam(defaultValue = "name") String sort,
+            @RequestParam(defaultValue = "ASC") String direction
+    ){
+        Sort.Direction sortDirection = direction.equalsIgnoreCase("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC;
+        Sort sortBy = Sort.by(sortDirection, sort);
+        Pageable pageable = PageRequest.of(
+                page, limit, sortBy
+        );
+        return ResponseEntity.ok(iCarService.searchCars(keyword, pageable));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CarDetailResponseDTO> getCarDetail(@PathVariable("id") int id){
         return ResponseEntity.ok(iCarService.getCarDetail(id));
@@ -67,4 +87,11 @@ public class CarController {
         return null;
     }
 
+    @PostMapping(value = "upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> uploadImages(
+            @PathVariable("id") int id,
+            @ModelAttribute("files") List<MultipartFile> files
+    ){
+        return ResponseEntity.ok(iCarService.uploadImages(id, files));
+    }
 }

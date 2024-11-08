@@ -3,24 +3,27 @@ package hdv_group11.CarSystem.services.implement;
 import hdv_group11.CarSystem.domain.dtos.*;
 import hdv_group11.CarSystem.domain.dtos.responses.*;
 import hdv_group11.CarSystem.domain.mapper.CarMapper;
-import hdv_group11.CarSystem.domain.models.Attribute;
-import hdv_group11.CarSystem.domain.models.Car;
-import hdv_group11.CarSystem.domain.models.CarAttribute;
-import hdv_group11.CarSystem.domain.models.Specification;
-import hdv_group11.CarSystem.repositories.AttributeRepository;
-import hdv_group11.CarSystem.repositories.CarAttributeRepository;
-import hdv_group11.CarSystem.repositories.CarRepository;
-import hdv_group11.CarSystem.repositories.SpecificationRepository;
+import hdv_group11.CarSystem.domain.models.*;
+import hdv_group11.CarSystem.repositories.*;
 import hdv_group11.CarSystem.services.ICarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +33,8 @@ public class CarService implements ICarService {
     private final SpecificationRepository specificationRepository;
     private final AttributeRepository attributeRepository;
     private final CarAttributeRepository carAttributeRepository;
+    private final CarImageRepository carImageRepository;
+    private final ManufactureRepository manufactureRepository;
     @Override
     public CarResponseDTO getCar(int id) {
         return null;
@@ -44,7 +49,6 @@ public class CarService implements ICarService {
     public CarDetailResponseDTO getCarDetail(int id) {
         Car car = carRepository.findById(id).orElseThrow(() -> new RuntimeException("Car not found"));
         List<Specification> specifications = specificationRepository.findAll();
-
         List<CarAttribute> carAttributes = carAttributeRepository.findAllByCarId(id);
 
         List<AttributeResponseDTO> attributeResponseDTOS = carAttributes.stream()
@@ -82,8 +86,12 @@ public class CarService implements ICarService {
     public Car createCar(AddCarRequestDTO addCarRequestDTO) {
             if(carRepository.findByName(
                     addCarRequestDTO.name()).isPresent()
-                    && carRepository.findByModel(addCarRequestDTO.model()).isPresent()){
+                    && carRepository.findByModel(addCarRequestDTO.model()).isPresent()
+            ){
                 throw new RuntimeException("Car already exists");
+            }
+            if(!manufactureRepository.findById(addCarRequestDTO.manufacturer()).isPresent()){
+                throw new RuntimeException("Manufacturer not found");
             }
             Car car = CarMapper.INSTANCE.toCar(addCarRequestDTO);
             return carRepository.save(car);
@@ -96,6 +104,9 @@ public class CarService implements ICarService {
                 car.getName()).isPresent()
                 && carRepository.findByModel(car.getModel()).isPresent()){
             throw new RuntimeException("Car already exists");
+        }
+        if(!manufactureRepository.findById(addCarDetailsRequestDTO.car().manufacturer()).isPresent()){
+            throw new RuntimeException("Manufacturer not found");
         }
         List<SpecificationRequestDTO> specificationRequestDTOS = addCarDetailsRequestDTO.specifications();
         specificationRequestDTOS.stream()
@@ -125,11 +136,131 @@ public class CarService implements ICarService {
 
     @Override
     public Car updateCar(UpdateCarRequestDTO updateCarRequestDTO) {
-        return null;
+        // Tìm xe theo ID. Nếu không tồn tại, ném ra ngoại lệ.
+        Car car = carRepository.findById(updateCarRequestDTO.id())
+                .orElseThrow(() -> new RuntimeException("Car not found"));
+
+        // Cập nhật các thuộc tính của xe từ DTO
+        car.setName(updateCarRequestDTO.name());
+        car.setModel(updateCarRequestDTO.model());
+        car.setPrice(updateCarRequestDTO.price());
+        car.setYearManufacture(updateCarRequestDTO.yearManufacturer());
+
+        // Cập nhật danh sách Specification và Attribute nếu có
+        if (updateCarRequestDTO.specifications() != null) {
+            List<SpecificationRequestDTO> specificationRequestDTOS = updateCarRequestDTO.specifications();
+            specificationRequestDTOS.forEach(specificationRequestDTO -> {
+                Specification specification = specificationRepository.findById(specificationRequestDTO.id())
+                        .orElseThrow(() -> new RuntimeException("Specification not found"));
+                specification.setName(specificationRequestDTO.name());
+                specificationRepository.save(specification);
+
+                List<AttributeRequestDTO> attributeRequestDTOS = specificationRequestDTO.attributes();
+                attributeRequestDTOS.forEach(attributeRequestDTO -> {
+                    CarAttribute carAttribute = carAttributeRepository.findByCarIdAndAttributeId(car.getId(), attributeRequestDTO.id())
+                            .orElseGet(() -> {
+                                Attribute attribute = CarMapper.INSTANCE.toAttribute(attributeRequestDTO);
+                                return CarAttribute.builder()
+                                        .car(car)
+                                        .attribute(attribute)
+                                        .value(attributeRequestDTO.value())
+                                        .build();
+                            });
+                    carAttribute.setValue(attributeRequestDTO.value());
+                    carAttributeRepository.save(carAttribute);
+                });
+            });
+        }
+        // Lưu lại các thay đổi vào database
+        return carRepository.save(car);
     }
 
     @Override
     public void deleteCar(int id) {
+        // Tìm kiếm và xóa xe dựa trên ID. Nếu không tìm thấy xe, ném ngoại lệ.
+        Car car = carRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Car not found"));
 
+        // Xóa các CarAttribute liên quan đến chiếc xe
+        List<CarAttribute> carAttributes = carAttributeRepository.findAllByCarId(id);
+        carAttributeRepository.deleteAll(carAttributes);
+
+        // Sau đó xóa xe khỏi repository
+        carRepository.delete(car);
+    }
+
+    @Override
+    public CarImage createCarImage(int carId, AddCarImageRequestDTO addCarImageRequestDTO) {
+        Car car = carRepository.findById(carId)
+                .orElseThrow(() -> new RuntimeException("Car not found"));
+
+        CarImage carImage = CarMapper.INSTANCE.toCarImage(addCarImageRequestDTO);
+        carImage.setCar(car);
+        return carImageRepository.save(carImage);
+    }
+
+    @Override
+    public Object uploadImages(int id, List<MultipartFile> files) {
+        try {
+            carRepository.findById(id).orElseThrow(() -> new RuntimeException("Car not found"));
+            files = files == null ? new ArrayList<>() : files;
+            if(files.size() > CarImage.MAXIMUM_IMAGES_PER_PRODUCT){
+                return ResponseEntity.badRequest().body("You can only upload maximum 5 images");
+            }
+            List<CarImage> carImages = new ArrayList<>();
+            for(MultipartFile file : files){
+                if(file != null) {
+                    if(file.getSize() == 0){
+                        continue;
+                    }
+                    if (file.getSize() > 10 * 1024 * 1024) {
+                        return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
+                                .body("File is too large! maximum size is 10MB");
+                    }
+                }
+                String contentType = file.getContentType();
+                if(contentType == null || !contentType.startsWith("image/")){
+                    return ResponseEntity.badRequest().body("File is not an image");
+                }
+                String fileName = storeFile(file);
+                AddCarImageRequestDTO addCarImageRequestDTO = new AddCarImageRequestDTO(id, fileName);
+                CarImage carImage = CarMapper.INSTANCE.toCarImage(addCarImageRequestDTO);
+                carImages.add(carImage);
+                createCarImage(id, addCarImageRequestDTO);
+            }
+            return ResponseEntity.ok(carImages);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Page<CarResponseDTO> searchCars(String keyword,Pageable pageable) {
+        return carRepository.searchCars(keyword, pageable).map(CarMapper.INSTANCE::toCarResponseDTO);
+    }
+
+    private String storeFile(MultipartFile file) throws Exception{
+        if(isImageFile(file) || file.getOriginalFilename() == null){
+            throw new IOException("Invalid image format");
+        }
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+        // them uuid vao truoc ten file de dam bao file la duy nhat
+        String uniqueFileName = UUID.randomUUID().toString() + "_" + fileName;
+        // duong dan den thu muc ban muon luu file
+        java.nio.file.Path uploadDir = java.nio.file.Paths.get("uploads");
+        // kiem tra va tao thu muc neu no khong ton tai
+        if(!Files.exists(uploadDir)){
+            Files.createDirectory(uploadDir);
+        }
+        // duong dan day du den file
+        java.nio.file.Path destination = Paths.get(uploadDir.toString(), uniqueFileName);
+        // sao chep file vao thu muc dich
+        Files.copy(file.getInputStream(), destination, StandardCopyOption.REPLACE_EXISTING);
+        return uniqueFileName;
+    }
+
+    private boolean isImageFile(MultipartFile file){
+        String contentType = file.getContentType();
+        return contentType == null || !contentType.startsWith("image/");
     }
 }

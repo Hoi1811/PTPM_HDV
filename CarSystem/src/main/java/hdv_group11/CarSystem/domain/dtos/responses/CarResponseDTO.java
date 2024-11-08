@@ -8,5 +8,6 @@ public record CarResponseDTO(
         @JsonProperty("year_manufacture")
         int yearManufacture,
         String model,
-        String price
+        String price,
+        ManufacturerResponseDTO manufacturer
 ) {}

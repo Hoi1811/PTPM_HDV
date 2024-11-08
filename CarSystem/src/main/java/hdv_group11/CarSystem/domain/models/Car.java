@@ -1,6 +1,5 @@
 package hdv_group11.CarSystem.domain.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,5 +24,9 @@ public class Car extends BaseEntity{
     private String model;
 
     private String price;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "manufacturer_id")
+    private Manufacturer manufacturer;
 
 }
