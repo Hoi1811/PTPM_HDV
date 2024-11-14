@@ -3,6 +3,7 @@ package hdv_group11.CarSystem.services.implement;
 
 import hdv_group11.CarSystem.components.JwtTokenUtils;
 import hdv_group11.CarSystem.domain.dtos.UserRequestDTO;
+import hdv_group11.CarSystem.domain.dtos.responses.UserResponseDTO;
 import hdv_group11.CarSystem.domain.mapper.UserMapper;
 import hdv_group11.CarSystem.domain.models.Role;
 import hdv_group11.CarSystem.domain.models.User;
@@ -18,6 +19,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -104,6 +106,21 @@ public class UserService implements IUserService {
             throw new Exception("You cannot delete users");
         }
         userRepository.deleteByPhoneNumber(phoneNumber);
+    }
+
+    @Override
+    public List<UserResponseDTO> getAllUsers(String token) throws Exception {
+        token = token.substring(7);
+        final String userPhoneNumber = jwtTokenUtil.extractPhoneNumber(token);
+        Optional<User> user = userRepository.findByPhoneNumber(userPhoneNumber);
+        String role = user.get().getRole().getName();
+        if (!role.equals(Role.ADMIN)) {
+            throw new Exception("Permission denied");
+        }
+        List<UserResponseDTO> userResponseDTOS = userRepository.findAll().stream()
+                .map(UserMapper.INSTANCE::toUserResponseDTO)
+                .toList();
+        return userResponseDTOS;
     }
 
 }

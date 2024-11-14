@@ -3,6 +3,7 @@ package hdv_group11.CarSystem.controllers;
 import hdv_group11.CarSystem.domain.dtos.UserLoginDTO;
 import hdv_group11.CarSystem.domain.dtos.UserRequestDTO;
 import hdv_group11.CarSystem.domain.dtos.responses.UserLoginResponseDTO;
+import hdv_group11.CarSystem.domain.dtos.responses.UserResponseDTO;
 import hdv_group11.CarSystem.services.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -62,6 +63,17 @@ public class UserController {
             String token = request.getHeader("Authorization");
             userService.deleteByPhoneNumber(phoneNumber, token);
             return ResponseEntity.ok("Delete user success");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("getAllUsers")
+    public ResponseEntity<?> getAllUsers(HttpServletRequest request) {
+        try {
+            String token = request.getHeader("Authorization");
+            List<UserResponseDTO> userResponseDTOList = userService.getAllUsers(token);
+            return ResponseEntity.ok().body(userResponseDTOList);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
