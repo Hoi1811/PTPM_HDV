@@ -11,6 +11,7 @@ public record UpdateCarRequestDTO(
         int yearManufacturer,
         String model,
         String price,
+        String thumbnail,
         List<SpecificationRequestDTO> specifications
 )
 {}

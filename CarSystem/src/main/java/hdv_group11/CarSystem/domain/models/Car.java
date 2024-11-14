@@ -25,6 +25,8 @@ public class Car extends BaseEntity{
 
     private String price;
 
+    private String thumbnail;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;

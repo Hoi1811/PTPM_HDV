@@ -9,5 +9,6 @@ public record CarResponseDTO(
         int yearManufacture,
         String model,
         String price,
+        String thumbnail,
         ManufacturerResponseDTO manufacturer
 ) {}

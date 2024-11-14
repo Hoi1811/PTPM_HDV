@@ -11,9 +11,9 @@ public record AddCarRequestDTO(
         @NonNull
         @JsonProperty("year_manufacture")
         int yearManufacture,
-
         String model,
         String price,
+        String thumbnail,
         ManufacturerRequestDTO manufacturer
 )
 {}

@@ -6,6 +6,7 @@ import hdv_group11.CarSystem.domain.mapper.CarMapper;
 import hdv_group11.CarSystem.domain.models.*;
 import hdv_group11.CarSystem.repositories.*;
 import hdv_group11.CarSystem.services.ICarService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -135,6 +136,7 @@ public class CarService implements ICarService {
 
 
     @Override
+    @Transactional
     public Car updateCar(UpdateCarRequestDTO updateCarRequestDTO) {
         // Tìm xe theo ID. Nếu không tồn tại, ném ra ngoại lệ.
         Car car = carRepository.findById(updateCarRequestDTO.id())
@@ -144,6 +146,7 @@ public class CarService implements ICarService {
         car.setName(updateCarRequestDTO.name());
         car.setModel(updateCarRequestDTO.model());
         car.setPrice(updateCarRequestDTO.price());
+        car.setThumbnail(updateCarRequestDTO.thumbnail());
         car.setYearManufacture(updateCarRequestDTO.yearManufacturer());
 
         // Cập nhật danh sách Specification và Attribute nếu có
@@ -176,6 +179,7 @@ public class CarService implements ICarService {
     }
 
     @Override
+    @Transactional
     public void deleteCar(int id) {
         // Tìm kiếm và xóa xe dựa trên ID. Nếu không tìm thấy xe, ném ngoại lệ.
         Car car = carRepository.findById(id)

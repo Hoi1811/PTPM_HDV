@@ -21,6 +21,7 @@ public interface CarMapper {
             @Mapping(source = "yearManufacture", target = "yearManufacture"),
             @Mapping(source = "model", target = "model"),
             @Mapping(source = "price", target = "price"),
+            @Mapping(source = "thumbnail", target = "thumbnail"),
             @Mapping(source = "manufacturer", target = "manufacturer"),
     })
     CarResponseDTO toCarResponseDTO(Car car);
@@ -40,6 +41,7 @@ public interface CarMapper {
             @Mapping(source = "car.yearManufacture", target = "yearManufacture"),
             @Mapping(source = "car.model", target = "model"),
             @Mapping(source = "car.price", target = "price"),
+            @Mapping(source = "car.thumbnail", target = "thumbnail"),
             @Mapping(source = "car.manufacturer", target = "manufacturer"),
     })
     Car toCar(AddCarDetailsRequestDTO addCarDetailsRequestDTO);

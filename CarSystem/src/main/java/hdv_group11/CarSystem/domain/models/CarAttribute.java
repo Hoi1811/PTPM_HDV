@@ -17,7 +17,7 @@ public class CarAttribute {
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "car_id")
+    @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "FK_CAR_ATTRIBUTE_CAR", foreignKeyDefinition = "FOREIGN KEY (car_id) REFERENCES car(id) ON DELETE CASCADE"))
     private Car car;
 
     @OneToOne(cascade = CascadeType.ALL)

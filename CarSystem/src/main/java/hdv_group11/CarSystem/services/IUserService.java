@@ -9,4 +9,6 @@ public interface IUserService {
     String login(String phoneNumber, String password) throws Exception;
 
     void deleteByPhoneNumber(String phoneNumber, String token) throws Exception;
+
+
 }
