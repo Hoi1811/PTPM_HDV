@@ -92,7 +92,7 @@ public class CarService implements ICarService {
             ){
                 throw new RuntimeException("Car already exists");
             }
-            if(!manufactureRepository.findById(addCarRequestDTO.manufacturer()).isPresent()){
+            if(addCarRequestDTO.manufacturer().name()=="" || !manufactureRepository.findById(addCarRequestDTO.manufacturer().id()).isPresent()){
                 throw new RuntimeException("Manufacturer not found");
             }
             Car car = CarMapper.INSTANCE.toCar(addCarRequestDTO);
