@@ -27,7 +27,7 @@ public class Car extends BaseEntity{
 
     private String thumbnail;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
 

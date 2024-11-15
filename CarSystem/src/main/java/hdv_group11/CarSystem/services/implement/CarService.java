@@ -21,10 +21,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +32,7 @@ public class CarService implements ICarService {
     private final AttributeRepository attributeRepository;
     private final CarAttributeRepository carAttributeRepository;
     private final CarImageRepository carImageRepository;
-    private final ManufactureRepository manufactureRepository;
+    private final ManufacturerRepository manufacturerRepository;
     @Override
     public CarResponseDTO getCar(int id) {
         return null;
@@ -92,10 +89,13 @@ public class CarService implements ICarService {
             ){
                 throw new RuntimeException("Car already exists");
             }
-            if(!manufactureRepository.findById(addCarRequestDTO.manufacturer()).isPresent()){
+            Optional<Manufacturer> optionalManufacturer =  manufacturerRepository.findById(addCarRequestDTO.manufacturer().id());
+            if(addCarRequestDTO.manufacturer().name()=="" || !optionalManufacturer.isPresent()){
                 throw new RuntimeException("Manufacturer not found");
             }
-            Car car = CarMapper.INSTANCE.toCar(addCarRequestDTO);
+//            Manufacturer manufacturer = optionalManufacturer.get();
+            Car car = CarMapper.INSTANCE.toCar(addCarRequestDTO, manufacturerRepository);
+//            car.setManufacturer(manufacturer);
             return carRepository.save(car);
     }
 
@@ -108,7 +108,7 @@ public class CarService implements ICarService {
                 && carRepository.findByModel(car.getModel()).isPresent()){
             throw new RuntimeException("Car already exists");
         }
-        if(!manufactureRepository.findById(addCarDetailsRequestDTO.car().manufacturer()).isPresent()){
+        if(!manufacturerRepository.findById(addCarDetailsRequestDTO.car().manufacturer()).isPresent()){
             throw new RuntimeException("Manufacturer not found");
         }
         List<SpecificationRequestDTO> specificationRequestDTOS = addCarDetailsRequestDTO.specifications();
