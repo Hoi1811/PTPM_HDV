@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface ManufactureRepository extends JpaRepository<Manufacturer, Integer> {
+public interface ManufacturerRepository extends JpaRepository<Manufacturer, Integer> {
 
     Optional<Object> findById(ManufacturerRequestDTO manufacturer);
 }

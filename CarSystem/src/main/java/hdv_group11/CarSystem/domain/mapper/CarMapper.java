@@ -3,6 +3,8 @@ package hdv_group11.CarSystem.domain.mapper;
 import hdv_group11.CarSystem.domain.dtos.*;
 import hdv_group11.CarSystem.domain.dtos.responses.*;
 import hdv_group11.CarSystem.domain.models.*;
+import hdv_group11.CarSystem.repositories.ManufacturerRepository;
+import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -10,11 +12,12 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface CarMapper {
     CarMapper INSTANCE = Mappers.getMapper(CarMapper.class);
 
-    Car toCar(AddCarRequestDTO addCarRequestDTO);
+    @Mapping(target = "manufacturer", expression = "java(manufacturerRepository.findById(addCarRequestDTO.manufacturer().id()).orElseThrow(() -> new RuntimeException(\"Manufacturer not found\")))")
+    Car toCar(AddCarRequestDTO addCarRequestDTO, @Context ManufacturerRepository manufacturerRepository);
 
     @Mappings({
             @Mapping(source = "name", target = "name"),
