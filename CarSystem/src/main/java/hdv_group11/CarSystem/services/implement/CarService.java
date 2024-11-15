@@ -85,6 +85,7 @@ public class CarService implements ICarService {
 
     @Override
     public Car createCar(AddCarRequestDTO addCarRequestDTO) {
+
             if(carRepository.findByName(
                     addCarRequestDTO.name()).isPresent()
                     && carRepository.findByModel(addCarRequestDTO.model()).isPresent()
@@ -97,6 +98,7 @@ public class CarService implements ICarService {
             Car car = CarMapper.INSTANCE.toCar(addCarRequestDTO);
             return carRepository.save(car);
     }
+
 
     @Override
     public Car createCarDetail(AddCarDetailsRequestDTO addCarDetailsRequestDTO) {
