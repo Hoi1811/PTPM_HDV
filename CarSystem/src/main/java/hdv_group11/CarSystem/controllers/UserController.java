@@ -1,9 +1,12 @@
 package hdv_group11.CarSystem.controllers;
 
+import hdv_group11.CarSystem.domain.dtos.UpdateUserRequestDTO;
 import hdv_group11.CarSystem.domain.dtos.UserLoginDTO;
 import hdv_group11.CarSystem.domain.dtos.UserRequestDTO;
 import hdv_group11.CarSystem.domain.dtos.responses.UserLoginResponseDTO;
 import hdv_group11.CarSystem.domain.dtos.responses.UserResponseDTO;
+import hdv_group11.CarSystem.domain.mapper.UserMapper;
+import hdv_group11.CarSystem.domain.models.User;
 import hdv_group11.CarSystem.services.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -56,17 +59,6 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteUser(@RequestParam String phoneNumber,
-            HttpServletRequest request) {
-        try {
-            String token = request.getHeader("Authorization");
-            userService.deleteByPhoneNumber(phoneNumber, token);
-            return ResponseEntity.ok("Delete user success");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
 
     @GetMapping("getAllUsers")
     public ResponseEntity<?> getAllUsers(HttpServletRequest request) {
@@ -78,6 +70,41 @@ public class UserController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PostMapping("addUser")
+    public ResponseEntity<?> addUser(@RequestBody UserRequestDTO userRequestDTO, HttpServletRequest request) throws Exception {
+        String token = request.getHeader("Authorization");
+        User user = userService.addUser(userRequestDTO,token);
+        UserResponseDTO userResponseDTO = UserMapper.INSTANCE.toUserResponseDTO(user);
+        if(user != null){
+            return ResponseEntity.ok(userResponseDTO);
+        }else {
+            return ResponseEntity.badRequest().body("Loi");
+        }
+    }
+
+    @PutMapping("updateUser")
+    public ResponseEntity<?> updateUser(@RequestBody UpdateUserRequestDTO updateUserRequestDTO, HttpServletRequest request) throws Exception {
+        String token = request.getHeader("Authorization");
+        User user = userService.updateUser(updateUserRequestDTO,token);
+        if(user != null){
+            return ResponseEntity.ok(user);
+        }else {
+            return ResponseEntity.badRequest().body("Loi");
+        }
+    }
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteUser(@RequestParam String phoneNumber,
+                                        HttpServletRequest request) {
+        try {
+            String token = request.getHeader("Authorization");
+            userService.deleteByPhoneNumber(phoneNumber, token);
+            return ResponseEntity.ok("Delete user success");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
 }
 
