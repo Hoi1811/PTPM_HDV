@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
@@ -33,10 +35,10 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        return http
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(request -> {
-
                     request.requestMatchers(
                                     String.format("%s/users/register", apiPrefix),
                                     String.format("%s/users/login", apiPrefix))
@@ -48,26 +50,40 @@ public class WebSecurityConfig {
                             .requestMatchers(DELETE, String.format("%s/users", apiPrefix)).permitAll()
                             .anyRequest().permitAll();
                 })
-                .csrf(AbstractHttpConfigurer::disable);
-        // Cấu hình CORS cho tất cả các request
-//        http.cors(new Customizer<CorsConfigurer<HttpSecurity>>() {
-//            @Override
-//            public void customize(CorsConfigurer<HttpSecurity> httpSecurityCorsConfigurer) {
-//                CorsConfiguration corsConfiguration = new CorsConfiguration();
-//                corsConfiguration.addAllowedOrigin("*");
-//                corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-//                corsConfiguration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "x-auth-token"));
-//                corsConfiguration.setExposedHeaders(List.of("x-auth-token"));
-//
-//
-//                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//                source.registerCorsConfiguration("/**", corsConfiguration);
-//
-//                httpSecurityCorsConfigurer.configurationSource(source);
-//            }
-//        });
+                .csrf(AbstractHttpConfigurer::disable)
+                .build();
 
-
-        return http.build();
+    }
+    private final List<String> ALLOWED_ORIGINS      = List.of(
+            "http://localhost:3000"
+    );
+    private final List<String> ALLOWED_HTTP_METHODS = List.of(
+            GET.toString(),
+            POST.toString(),
+            PUT.toString(),
+            PATCH.toString(),
+            DELETE.toString()
+    );
+    private final List<String> ALLOWED_HEADERS      = List.of(
+            HttpHeaders.AUTHORIZATION,
+            HttpHeaders.ACCEPT_LANGUAGE,
+            HttpHeaders.CONTENT_TYPE
+    );
+    private final List<String> EXPOSED_HEADERS      = List.of(
+            HttpHeaders.AUTHORIZATION,
+            HttpHeaders.ACCEPT_LANGUAGE
+    );
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(ALLOWED_ORIGINS);
+        configuration.setAllowedMethods(ALLOWED_HTTP_METHODS);
+        configuration.setAllowedHeaders(ALLOWED_HEADERS);
+        configuration.setExposedHeaders(EXPOSED_HEADERS);
+        configuration.setMaxAge((long) (24 * 60 * 60));
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
