@@ -1,5 +1,6 @@
 package hdv_group11.CarSystem.aspects;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -8,10 +9,13 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 @Aspect
 @Component
 @Slf4j
 public class UserActivityLogger {
+    private final AtomicInteger userCounter = new AtomicInteger(0);
 
     @Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
     public void controllerMethods(){}
@@ -21,4 +25,5 @@ public class UserActivityLogger {
         log.info("thanh cong roi");
         return null;
     }
+
 }

@@ -23,4 +23,5 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
             @Param("keyword") String keyword,
             Pageable pageable
     );
+
 }

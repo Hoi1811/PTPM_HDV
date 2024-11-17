@@ -12,6 +12,7 @@ import hdv_group11.CarSystem.repositories.RoleRepository;
 import hdv_group11.CarSystem.repositories.UserRepository;
 import hdv_group11.CarSystem.services.IUserService;
 import io.jsonwebtoken.Claims;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -103,6 +104,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public User addUser(UserRequestDTO userRequestDTO, String token) throws Exception {
         Optional<User> optionalNewUser= userRepository.findByPhoneNumber(userRequestDTO.phoneNumber());//xd sdt user
         if(!optionalNewUser.isPresent()) {
@@ -121,6 +123,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public User updateUser(UpdateUserRequestDTO updateUserRequestDTO, String token) throws Exception {
         Optional<User> optionalUser=userRepository.findByPhoneNumber(updateUserRequestDTO.phoneNumber());
 
@@ -139,6 +142,7 @@ public class UserService implements IUserService {
     }
 
     @Override
+    @Transactional
     public void deleteByPhoneNumber(String phoneNumber, String token) throws Exception {
         Optional<User> optionalUser = userRepository.findByPhoneNumber(phoneNumber);
         if (optionalUser.isEmpty()) {
@@ -148,7 +152,7 @@ public class UserService implements IUserService {
         token = token.substring(7);
         final String userPhoneNumber = jwtTokenUtil.extractPhoneNumber(token);
         Optional<User> user = userRepository.findByPhoneNumber(userPhoneNumber);
-        Role role = user.get().getRole();
+        String role = user.get().getRole().getName();
         String subRole = optionalUser.get().getRole().getName().toUpperCase();
         if (!role.equals(Role.ADMIN)) {
             throw new Exception("Permission denied");

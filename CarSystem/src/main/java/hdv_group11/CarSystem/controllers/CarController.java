@@ -32,7 +32,7 @@ public class CarController {
     ){
         PageRequest pageRequest = PageRequest.of(
                 page, limit,
-                Sort.by("name").descending()
+                Sort.by("id").ascending()
         );
         Page<CarResponseDTO> carPage = iCarService.getAllCars(pageRequest);
         int totalPage = carPage.getTotalPages();
