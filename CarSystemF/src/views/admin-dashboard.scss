@@ -1,0 +1,34 @@
+.admin-dashboard {
+   // padding:  50px;
+    display: flex;
+    width: 94%;
+    margin-top: 20px;
+    margin-right: -68px;
+}
+
+.Nav{
+    width: 250px;
+    background-color: #fff;
+    color: black;
+    //position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    padding: 20px;
+    box-sizing: border-box;  /* Đảm bảo padding không làm tăng chiều rộng */
+    z-index: 100;
+}
+
+.routes-container {
+    background: #fff;
+    border: 1px solid #e4e5e7;
+    border-radius: 2px;
+    margin-left: 200px; /* Đảm bảo không bị che bởi Nav */
+    padding: 20px;
+    width: calc(100% - 250px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Giữ phần nội dung ở trên */
+    min-height: 100vh;
+
+}

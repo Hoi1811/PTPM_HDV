@@ -1,0 +1,96 @@
+// Global styles
+$primary-color: #4CAF50;
+$text-color: #333;
+$subtext-color: #888;
+$background-color: #fff;
+$border-color: #ddd;
+$hover-bg-color: #f1f1f1;
+$active-bg-color: #e7f7e7;
+
+// Styling for the container
+.car-detail-container {
+    width: 80%;
+    margin: 20px auto;
+    margin-left: 270px;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: $background-color;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 24px;
+    color: $text-color;
+    margin-bottom: 15px;
+}
+
+p {
+    font-size: 18px;
+    color: $subtext-color;
+    margin: 10px 0;
+}
+
+// Styling for each spec group
+.spec-group {
+    margin-bottom: 25px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid $border-color;
+
+    .spec-header {
+        font-size: 20px;
+        font-weight: 600;
+        color: $text-color;
+        background-color: $background-color;
+        padding: 15px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        border-bottom: 1px solid $border-color;
+
+        &:hover {
+            background-color: $hover-bg-color;
+        }
+
+        .toggle-btn {
+            font-size: 18px;
+            color: $subtext-color;
+        }
+    }
+
+    // .spec-details mặc định sẽ ẩn
+    .spec-details {
+        display: none;  // Đảm bảo các chi tiết này chỉ hiển thị khi mở
+        padding: 15px;
+        background-color: $active-bg-color;
+        list-style-type: none;
+        margin: 10px 0 0 0;
+        display: grid;  // Sử dụng grid layout để căn chỉnh các mục thông tin chi tiết
+        gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); // Cột tự động với kích thước tối thiểu 250px
+
+        li {
+            font-size: 16px;
+            color: $text-color;
+            padding: 8px 0;
+            border-bottom: 1px solid $border-color;
+
+            &:last-child {
+                border-bottom: none;
+            }
+
+            strong {
+                color: $primary-color;
+                font-weight: 600;
+            }
+        }
+    }
+
+    // Khi click vào header, thông tin chi tiết được hiển thị
+    &.expanded .spec-details {
+        display: grid;
+    }
+}
