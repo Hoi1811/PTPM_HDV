@@ -25,7 +25,6 @@ public class UserController {
 
     private final IUserService userService;
 
-
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@Valid @RequestBody UserRequestDTO userRequestDTO, BindingResult result) {
         try {
@@ -47,8 +46,6 @@ public class UserController {
     public ResponseEntity<UserLoginResponseDTO> login(@Valid @RequestBody UserLoginDTO userLoginDTO
 
     ) throws Exception {
-        // kiem tra thong tin dang nhap va sinh token
-        // kiem tra va tra ve token trong response
         try {
             String token = userService.login(userLoginDTO.phoneNumber(), userLoginDTO.password());
             UserLoginResponseDTO userLoginResponseDTO = new UserLoginResponseDTO("Login Success", token);

@@ -33,6 +33,7 @@ public class CarService implements ICarService {
     private final CarAttributeRepository carAttributeRepository;
     private final CarImageRepository carImageRepository;
     private final ManufacturerRepository manufacturerRepository;
+    private final CarViewRepository carViewRepository;
     @Override
     public CarResponseDTO getCar(int id) {
         return null;
@@ -243,6 +244,23 @@ public class CarService implements ICarService {
     @Override
     public Page<CarResponseDTO> searchCars(String keyword,Pageable pageable) {
         return carRepository.searchCars(keyword, pageable).map(CarMapper.INSTANCE::toCarResponseDTO);
+    }
+
+    @Override
+    @Transactional
+    public void increaseViewCount(int carId) {
+        Optional<Car> optionalCar = carRepository.findById(carId);
+        if(optionalCar.isPresent()){
+            Car car = optionalCar.get();
+            CarView carView = carViewRepository.findByCarId(carId).orElseGet(() -> {
+                CarView newCarView = new CarView();
+                newCarView.setCar(car);
+                newCarView.setViewCount(0);
+                return newCarView;
+            });
+            carView.setViewCount(carView.getViewCount() + 1);
+            carViewRepository.save(carView);
+        }
     }
 
     private String storeFile(MultipartFile file) throws Exception{

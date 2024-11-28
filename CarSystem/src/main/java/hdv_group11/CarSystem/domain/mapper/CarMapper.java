@@ -59,4 +59,6 @@ public interface CarMapper {
     Attribute toAttribute(AddAttributeRequestDTO addAttributeRequestDTO);
 
     CarImage toCarImage(AddCarImageRequestDTO addCarImageRequestDTO);
+
+    CarViewResponse toCarViewResponse(CarView carView);
 }

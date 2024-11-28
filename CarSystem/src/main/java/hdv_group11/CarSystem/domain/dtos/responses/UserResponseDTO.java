@@ -8,12 +8,16 @@ import jakarta.validation.constraints.NotNull;
 import java.sql.Date;
 
 public record UserResponseDTO(
+        @JsonProperty
+        Long id,
+
         @JsonProperty("fullname")
         String fullName,
 
         @JsonProperty("phone_number")
         String phoneNumber,
 
+        @JsonProperty
         String address,
 
         @JsonProperty("date_of_birth")

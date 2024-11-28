@@ -27,4 +27,5 @@ public interface ICarService {
     CarImage createCarImage(int carId, AddCarImageRequestDTO addCarImageRequestDTO);
     Object uploadImages(int id, List<MultipartFile> files);
     Page<CarResponseDTO> searchCars(String keyword, Pageable pageable);
+    void increaseViewCount(int carId);
 }
