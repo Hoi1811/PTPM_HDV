@@ -1,7 +1,6 @@
 package hdv_group11.CarSystem.controllers;
 
 import hdv_group11.CarSystem.domain.dtos.AddAttributeRequestDTO;
-import hdv_group11.CarSystem.domain.models.Attribute;
 import hdv_group11.CarSystem.services.implement.AttributeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

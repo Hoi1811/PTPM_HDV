@@ -7,6 +7,7 @@ import hdv_group11.CarSystem.domain.dtos.responses.UserLoginResponseDTO;
 import hdv_group11.CarSystem.domain.dtos.responses.UserResponseDTO;
 import hdv_group11.CarSystem.domain.mapper.UserMapper;
 import hdv_group11.CarSystem.domain.models.User;
+import hdv_group11.CarSystem.services.IEmailService;
 import hdv_group11.CarSystem.services.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;

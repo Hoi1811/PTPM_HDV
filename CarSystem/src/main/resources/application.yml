@@ -6,6 +6,18 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: nguyendinhhoi1804@gmail.com
+    password: jsgjtjvptgqbggek
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 
   jpa:
     hibernate:

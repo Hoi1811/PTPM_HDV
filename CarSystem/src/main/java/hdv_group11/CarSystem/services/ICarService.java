@@ -8,6 +8,7 @@ import hdv_group11.CarSystem.domain.dtos.responses.CarDetailResponseDTO;
 import hdv_group11.CarSystem.domain.dtos.responses.CarResponseDTO;
 import hdv_group11.CarSystem.domain.models.Car;
 import hdv_group11.CarSystem.domain.models.CarImage;
+import hdv_group11.CarSystem.domain.models.CarView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -28,4 +29,6 @@ public interface ICarService {
     Object uploadImages(int id, List<MultipartFile> files);
     Page<CarResponseDTO> searchCars(String keyword, Pageable pageable);
     void increaseViewCount(int carId);
+    List<CarView> getTopCar();
+    Object updateThumbnail(int carId, MultipartFile file);
 }

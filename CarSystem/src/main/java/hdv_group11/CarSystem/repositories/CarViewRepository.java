@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CarViewRepository extends JpaRepository<CarView, Integer> {
@@ -14,4 +15,9 @@ public interface CarViewRepository extends JpaRepository<CarView, Integer> {
     void increaseViewCount(@Param("carId") int carId);
 
     Optional<CarView> findByCarId(int carId);
+
+    @Query(
+            "SELECT c FROM CarView c ORDER BY c.viewCount DESC"
+    )
+    List<CarView> getTopCar();
 }

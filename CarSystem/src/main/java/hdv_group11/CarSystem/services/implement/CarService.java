@@ -263,6 +263,33 @@ public class CarService implements ICarService {
         }
     }
 
+    @Override
+    public List<CarView> getTopCar() {
+        return carViewRepository.getTopCar();
+    }
+
+    @Override
+    @Transactional
+    public Object updateThumbnail(int carId, MultipartFile file) {
+        try {
+            Car car = carRepository.findById(carId).orElseThrow(() -> new RuntimeException("Car not found"));
+            if (file.getSize() > 10 * 1024 * 1024) {
+                return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
+                        .body("File is too large! maximum size is 10MB");
+            }
+            String contentType = file.getContentType();
+            if(contentType == null || !contentType.startsWith("image/")){
+                return ResponseEntity.badRequest().body("File is not an image");
+            }
+            String fileName = storeFile(file);
+            car.setThumbnail(fileName);
+            carRepository.save(car);
+            return ResponseEntity.ok(car);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private String storeFile(MultipartFile file) throws Exception{
         if(isImageFile(file) || file.getOriginalFilename() == null){
             throw new IOException("Invalid image format");

@@ -2,12 +2,14 @@ package hdv_group11.CarSystem.controllers;
 
 import hdv_group11.CarSystem.domain.dtos.AddCarDetailsRequestDTO;
 import hdv_group11.CarSystem.domain.dtos.AddCarRequestDTO;
+import hdv_group11.CarSystem.domain.dtos.UpdateCarRequestDTO;
 import hdv_group11.CarSystem.domain.dtos.responses.CarDetailResponseDTO;
 import hdv_group11.CarSystem.domain.dtos.responses.CarListResponseDTO;
 import hdv_group11.CarSystem.domain.dtos.responses.CarResponseDTO;
 import hdv_group11.CarSystem.domain.models.Car;
 import hdv_group11.CarSystem.services.ICarService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Paths;
 import java.util.List;
 
 @RestController
@@ -79,12 +82,13 @@ public class CarController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateCar(Car car){
-        return null;
+    public ResponseEntity<?> updateCar(UpdateCarRequestDTO car){
+        return ResponseEntity.ok(iCarService.updateCar(car));
     }
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteCar(int id){
-        return null;
+        iCarService.deleteCar(id);
+        return ResponseEntity.ok("Deleted");
     }
 
     @PostMapping(value = "upload/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -93,5 +97,35 @@ public class CarController {
             @ModelAttribute("files") List<MultipartFile> files
     ){
         return ResponseEntity.ok(iCarService.uploadImages(id, files));
+    }
+
+    @GetMapping("/top")
+    public ResponseEntity<?> getTopCar(){
+        return ResponseEntity.ok(iCarService.getTopCar());
+    }
+
+    @GetMapping("/images/{imageName}")
+    public ResponseEntity<?> getImage(@PathVariable("imageName") String imageName){
+        try {
+            java.nio.file.Path imagePath = Paths.get("uploads/" + imageName);
+            UrlResource resource = new UrlResource(imagePath.toUri());
+            if(resource.exists()){
+                return ResponseEntity.ok()
+                        .contentType(MediaType.IMAGE_JPEG)
+                        .body(resource);
+            }else{
+                return ResponseEntity.notFound().build();
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @PostMapping("/thumbnail/{id}")
+    public ResponseEntity<?> updateThumbnail(
+            @PathVariable("id") int id,
+            @RequestParam("file") MultipartFile file
+    ){
+        return ResponseEntity.ok(iCarService.updateThumbnail(id, file));
     }
 }

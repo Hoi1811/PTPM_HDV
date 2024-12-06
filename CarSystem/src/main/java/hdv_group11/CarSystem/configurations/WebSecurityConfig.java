@@ -41,9 +41,11 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(request -> {
                     request.requestMatchers(
                                     String.format("%s/users/register", apiPrefix),
-                                    String.format("%s/users/login", apiPrefix))
+                                    String.format("%s/users/login", apiPrefix),
+                                    String.format("%s/email/send", apiPrefix))
                             .permitAll()
                             .requestMatchers(GET, String.format("%s/car", apiPrefix)).permitAll()
+                            .requestMatchers(POST, String.format("%s/car/thumbnail", apiPrefix)).hasRole("ADMIN")
                             .requestMatchers(POST, String.format("%s/car", apiPrefix)).hasRole("ADMIN")
                             .requestMatchers(POST, String.format("%s/users", apiPrefix)).hasRole("ADMIN")
                             .requestMatchers(PUT, String.format("%s/users", apiPrefix)).hasRole("ADMIN")

@@ -1,8 +1,6 @@
 package hdv_group11.CarSystem.domain.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import java.sql.Date;
 

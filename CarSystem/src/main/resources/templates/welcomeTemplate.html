@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Our Service!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .email-header {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        .email-header h1 {
+            margin: 0;
+        }
+        .email-body {
+            padding: 20px;
+        }
+        .email-body h2 {
+            color: #4CAF50;
+        }
+        .email-body p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            margin-top: 20px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="email-header">
+        <h1>Welcome to Our Service, <span th:text="${userName}"></span>!</h1>
+    </div>
+    <div class="email-body">
+        <h2>We are thrilled to have you with us!</h2>
+        <p>
+            Hi <span th:text="${userName}"></span>,
+            <br><br>
+            Thank you for joining us! We're excited to have you on board and look forward to helping you make the most out of our service.
+            <br><br>
+            You can now access all our amazing features and start your journey with us. If you have any questions, feel free to reach out to our support team.
+            <br><br>
+            To get started, just click the button below:
+        </p>
+        <a href="https://www.yourwebsite.com/get-started" class="button">Get Started</a>
+    </div>
+    <div class="footer">
+        <p>Best regards,</p>
+        <p>The Team at Your Service</p>
+        <p>For support, contact us at support@yourdomain.com</p>
+    </div>
+</div>
+</body>
+</html>
