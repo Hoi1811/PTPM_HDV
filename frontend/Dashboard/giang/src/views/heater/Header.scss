@@ -1,0 +1,113 @@
+/* Header container */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 60px;
+  width: 100%;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  color: #333333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+ // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+  border-bottom: 2px solid #f0f0f0; /* Đường phân cách dưới header */
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  border-radius: 50%; /* Thêm bo góc để ảnh logo tròn */
+}
+
+.logo-text {
+  font-size: 22px;
+  font-weight: 600;
+  color: #1e88e5; /* Màu xanh lam nổi bật */
+}
+
+/* Phần tìm kiếm */
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  margin-right: 20px;
+}
+
+.search-container input {
+  padding: 10px;
+  margin-left: 65%;
+  border: 1px solid #ddd;
+  border-radius: 25px; /* Làm tròn góc */
+  width: 300px;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s ease; 
+  margin-top: 10px;/* Thêm hiệu ứng khi focus */
+}
+
+.search-container input:focus {
+  border-color: #1e88e5; /* Đổi màu viền khi focus */
+  box-shadow: 0 0 5px rgba(30, 136, 229, 0.3); /* Hiệu ứng viền khi focus */
+}
+
+.search-container button {
+  margin-left: 0px;
+  padding: 10px 15px;
+  background-color: #1e88e5;
+  border: none;
+  color: white;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: all 0.3s ease; /* Thêm hiệu ứng hover */
+}
+
+.search-container button:hover {
+  background-color: #1669c1; /* Màu khi hover */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Đổ bóng khi hover */
+}
+
+/* Biểu tượng bên phải */
+.header-icons img {
+
+  margin-top: 10px;
+  width: 35px;
+  height: 35px;
+  //margin-left: 5px;
+  cursor: pointer;
+  margin-right: 20px;
+  transition: transform 0.3s ease; /* Thêm hiệu ứng hover */
+}
+
+.header-icons img:hover {
+  transform: scale(1.1); /* Phóng to nhẹ khi hover */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    height: auto;
+    padding: 15px;
+  }
+
+  .search-container {
+    margin: 10px 0;
+  }
+
+  .search-container input {
+    width: 80%; /* Thu nhỏ ô tìm kiếm trên màn hình nhỏ */
+  }
+}
