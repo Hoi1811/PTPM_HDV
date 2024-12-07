@@ -85,8 +85,8 @@ public class CarController {
     public ResponseEntity<?> updateCar(UpdateCarRequestDTO car){
         return ResponseEntity.ok(iCarService.updateCar(car));
     }
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteCar(int id){
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteCar(@PathVariable int id){
         iCarService.deleteCar(id);
         return ResponseEntity.ok("Deleted");
     }
