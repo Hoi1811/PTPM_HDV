@@ -2,10 +2,10 @@ spring:
   application:
     name: CarSystem
   datasource:
-    url: jdbc:mysql://localhost:3306/cardatabase1?userSSL=false&serverTimezone=UTC
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/carsystem?useSSL=false&serverTimezone=UTC}
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 123456
+    password: ${MYSQL_ROOT_PASSWORD:}
   mail:
     host: smtp.gmail.com
     port: 587
@@ -17,6 +17,10 @@ spring:
           auth: true
           starttls:
             enable: true
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
 
 
   jpa:
@@ -42,3 +46,11 @@ jwt:
   expiration: 2592000
   secretKey: 4dgRtVz/pj0VzujFlyDFvh6UoKEDXB6NWpfEKGWdiDk=
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

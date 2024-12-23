@@ -42,7 +42,8 @@ public class WebSecurityConfig {
                     request.requestMatchers(
                                     String.format("%s/users/register", apiPrefix),
                                     String.format("%s/users/login", apiPrefix),
-                                    String.format("%s/email/send", apiPrefix))
+                                    String.format("%s/email/send", apiPrefix),
+                                    String.format("/actuator", apiPrefix))
                             .permitAll()
                             .requestMatchers(GET, String.format("%s/car", apiPrefix)).permitAll()
                             .requestMatchers(POST, String.format("%s/car/thumbnail", apiPrefix)).hasRole("ADMIN")
@@ -59,7 +60,8 @@ public class WebSecurityConfig {
 
     }
     private final List<String> ALLOWED_ORIGINS      = List.of(
-            "http://localhost:3000"
+            "http://localhost:3000",
+            "http://localhost:3001"
     );
     private final List<String> ALLOWED_HTTP_METHODS = List.of(
             GET.toString(),

@@ -68,13 +68,7 @@ public class UserService implements IUserService {
         }
         //
         User user = optionalUser.get();
-        // da co trong authenticationManager chiu trach nhiem
-//        if(user.getFacebookAccountId() == 0 && user.getGoogleAccountId() == 0) {
-//            if(passwordEncoder.matches(password, user.getPassword())){
-//                throw new BadCredentialsException("Wrong phone number or password");
-//            }
-//        }
-        // tao doi tuong de mang di so sanh
+
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 phoneNumber, password, user.getAuthorities()
         );

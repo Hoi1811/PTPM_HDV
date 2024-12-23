@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.*;
@@ -298,7 +299,9 @@ public class CarService implements ICarService {
         // them uuid vao truoc ten file de dam bao file la duy nhat
         String uniqueFileName = UUID.randomUUID().toString() + "_" + fileName;
         // duong dan den thu muc ban muon luu file
-        java.nio.file.Path uploadDir = java.nio.file.Paths.get("uploads");
+        Path path = Paths.get(System.getProperty("user.dir"));
+        java.nio.file.Path uploadDir = path.resolve("uploads");
+
         // kiem tra va tao thu muc neu no khong ton tai
         if(!Files.exists(uploadDir)){
             Files.createDirectory(uploadDir);

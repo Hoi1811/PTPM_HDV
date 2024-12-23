@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -107,7 +108,8 @@ public class CarController {
     @GetMapping("/images/{imageName}")
     public ResponseEntity<?> getImage(@PathVariable("imageName") String imageName){
         try {
-            java.nio.file.Path imagePath = Paths.get("uploads/" + imageName);
+            Path path = Paths.get(System.getProperty("user.dir"));
+            java.nio.file.Path imagePath = path.resolve("uploads/" + imageName);
             UrlResource resource = new UrlResource(imagePath.toUri());
             if(resource.exists()){
                 return ResponseEntity.ok()
