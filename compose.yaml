@@ -1,0 +1,69 @@
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Docker Compose reference guide at
+# https://docs.docker.com/go/compose-spec-reference/
+
+# Here the instructions define your application as a service called "server".
+# This service is built from the Dockerfile in the current directory.
+# You can add other services your application may depend on here, such as a
+# database or a cache. For examples, see the Awesome Compose repository:
+# https://github.com/docker/awesome-compose
+services:
+  carsystem-container:
+    container_name: carsystem-container
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8089:8088
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql8-container:3306/CarSystem?serverTimezone=UTC&AllowPublicKeyRetrieval=true
+      MYSQL_ROOT_PASSWORD: root
+      REDIS_HOST: redis-container
+      REDIS_PORT: 6379
+    depends_on:
+      - mysql8-container
+      - redis-container
+    networks:
+      - carsystem-network
+
+  mysql8-container:
+    container_name: mysql8-container
+    image: mysql:8.2.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: CarSystem
+    ports:
+      - "3307:3306"
+    networks:
+      - carsystem-network
+
+  phpmyadmin-container:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin-container
+    restart: always
+    depends_on:
+      - mysql8-container
+    ports:
+      - "8100:80"
+    environment:
+      PMA_HOST: mysql8-container
+    networks:
+        - carsystem-network
+
+  redis-container:
+    container_name: redis-container
+    image: docker.io/redis:latest
+    ports:
+      - "6379:6379"
+    restart: always
+    volumes:
+      - ./redis-data:/data
+    networks:
+      - carsystem-network
+networks:
+    carsystem-network:
+        driver: bridge
+
+
+
