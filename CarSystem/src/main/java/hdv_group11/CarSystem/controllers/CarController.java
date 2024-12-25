@@ -1,5 +1,6 @@
 package hdv_group11.CarSystem.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import hdv_group11.CarSystem.domain.dtos.AddCarDetailsRequestDTO;
 import hdv_group11.CarSystem.domain.dtos.AddCarRequestDTO;
 import hdv_group11.CarSystem.domain.dtos.UpdateCarRequestDTO;
@@ -8,6 +9,7 @@ import hdv_group11.CarSystem.domain.dtos.responses.CarListResponseDTO;
 import hdv_group11.CarSystem.domain.dtos.responses.CarResponseDTO;
 import hdv_group11.CarSystem.domain.models.Car;
 import hdv_group11.CarSystem.services.ICarService;
+import hdv_group11.CarSystem.services.IRedisCarService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
@@ -28,24 +30,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CarController {
     private final ICarService iCarService;
+    private final IRedisCarService iRedisCarService;
 
     @GetMapping("")
-    public ResponseEntity<CarListResponseDTO> getAllCars(
+    public ResponseEntity<?> getAllCars(
         @RequestParam("page") int page,
         @RequestParam("limit") int limit
-    ){
+    ) throws JsonProcessingException {
         PageRequest pageRequest = PageRequest.of(
                 page, limit,
                 Sort.by("id").ascending()
         );
-        Page<CarResponseDTO> carPage = iCarService.getAllCars(pageRequest);
-        int totalPage = carPage.getTotalPages();
-        List<CarResponseDTO> cars = carPage.getContent();
-        return ResponseEntity.ok(CarListResponseDTO.builder()
-                .cars(cars)
-                .totalPage(totalPage)
-                .build()
-        );
+        Page<CarResponseDTO> cars = iRedisCarService.getAllCars(pageRequest);
+        if(cars == null){
+            cars = iCarService.getAllCars(pageRequest);
+            iRedisCarService.saveAllCars(cars, pageRequest);
+            return ResponseEntity.ok(cars);
+        }
+        return ResponseEntity.ok(cars);
+
     }
     @GetMapping("searchCar")
     public ResponseEntity<?> searchCarByNameOrManufacturer(
@@ -54,13 +57,19 @@ public class CarController {
             @RequestParam("limit") int limit,
             @RequestParam(defaultValue = "name") String sort,
             @RequestParam(defaultValue = "ASC") String direction
-    ){
+    ) throws JsonProcessingException {
         Sort.Direction sortDirection = direction.equalsIgnoreCase("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC;
         Sort sortBy = Sort.by(sortDirection, sort);
         Pageable pageable = PageRequest.of(
                 page, limit, sortBy
         );
-        return ResponseEntity.ok(iCarService.searchCars(keyword, pageable));
+        Page<CarResponseDTO> cars = iRedisCarService.getAllCars(keyword, (PageRequest) pageable);
+        if(cars == null){
+            cars = iCarService.searchCars(keyword, pageable);
+            iRedisCarService.saveAllCars(cars, keyword, (PageRequest) pageable);
+            return ResponseEntity.ok(cars);
+        }
+        return ResponseEntity.ok(cars);
     }
 
     @GetMapping("/{id}")
