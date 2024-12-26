@@ -1,0 +1,222 @@
+.service-section {
+    margin-top: 100px;
+    background-color: #f3f4f6;
+    padding: 16px;
+}
+
+.service-container {
+    max-width: 1120px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styles */
+.service-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.service-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.service-subtitle {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+/* Service item styles */
+.service-content {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+}
+
+.single-service-item {
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    width: 256px;
+}
+
+.service-image-container {
+    position: relative;
+}
+
+.service-image {
+    width: 100%;
+    height: 128px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.close-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #6b7280;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.service-name {
+    margin-top: 8px;
+    font-weight: 600;
+}
+
+.service-options {
+    margin-top: 8px;
+}
+
+.service-select {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+/* Footer styles */
+.service-footer {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9fafb;
+    border: 1px dashed #d1d5db;
+    border-radius: 8px;
+    text-align: center;
+    /* Căn giữa text */
+}
+
+/* Modal styling */
+.modal-field {
+    margin-bottom: 16px;
+}
+
+.modal-field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.modal-field input {
+    width: 100%;
+}
+
+/* Optional styling for modal buttons */
+.MuiDialogActions-root {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.MuiDialogTitle-root {
+    font-size: 1.25rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* css so sánh */
+
+/* Modal styling */
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.comparison-table th,
+.comparison-table td {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 8px;
+}
+
+.comparison-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    color: rgb(58, 78, 255);
+}
+
+/* Styling for modal */
+.MuiDialog-root {
+    z-index: 9999;
+    /* Đảm bảo modal hiển thị phía trên các phần tử khác */
+}
+
+.MuiDialogContent-root {
+    padding: 16px;
+    /* Thêm khoảng cách padding */
+    overflow-x: auto;
+    /* Cho phép cuộn ngang nếu bảng quá rộng */
+}
+
+.MuiDialogTitle-root {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.MuiDialogActions-root {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.service-footer {
+    margin-top: 16px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* CSS để tạo hộp tìm kiếm nổi trên màn hình */
+.search-box {
+    position: fixed;
+    top: 50%;
+    /* Cách từ đỉnh màn hình 20px */
+    right: 50%;
+    /* Cách từ phải màn hình 20px */
+    z-index: 1000;
+    /* Đảm bảo hộp tìm kiếm luôn ở trên cùng */
+    background-color: white;
+    border-radius: 8px;
+    padding: 10px;
+    /* background-color: 0 4px 8px rgba(0, 0, 0, 0.2);; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    height: 160px;
+    /* Chiều rộng của hộp tìm kiếm */
+}
+
+.search-box input {
+    width: 100%;
+    padding: 8px;
+    height: 100px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Màu nền mờ */
+    z-index: 999;
+    /* Đảm bảo lớp phủ ở trên cùng */
+}

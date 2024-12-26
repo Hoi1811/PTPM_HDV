@@ -1,0 +1,6 @@
+.navbar {
+    margin-top: -100px;
+    position: relative;
+    /* Header là tham chiếu cho các thành phần con */
+    z-index: 3;
+}

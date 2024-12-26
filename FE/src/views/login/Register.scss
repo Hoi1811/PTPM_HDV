@@ -1,0 +1,122 @@
+/* Register.scss */
+.register-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Sử dụng chiều cao đầy đủ của viewport */
+    background-color: #f4f7fa; /* Nền sáng, dễ nhìn */
+    padding: 20px; /* Thêm padding cho các phần tử */
+  }
+  
+  .register-container {
+    width: 450px; /* Chiều rộng tối đa của container */
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px; /* Bo góc mềm mại */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* Tạo bóng nhẹ cho hộp */
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  h2 {
+    font-size: 30px; /* Tăng kích thước font tiêu đề */
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 30px; /* Khoảng cách dưới tiêu đề */
+    text-align: center;
+  }
+  
+  .register-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px; /* Khoảng cách giữa các input */
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-size: 15px;
+    color: #555; /* Màu chữ dễ đọc */
+    margin-bottom: 8px; /* Khoảng cách giữa label và input */
+  }
+  
+  input {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 100%;
+    background-color: #f9f9f9; /* Màu nền sáng cho input */
+    color: #333;
+    transition: all 0.3s ease; /* Thêm hiệu ứng chuyển tiếp */
+  }
+  
+  input:focus {
+    outline: none;
+    border: 1px solid #007bff; /* Đổi màu viền khi focus */
+    background-color: #eef5ff; /* Màu nền sáng khi focus */
+  }
+  
+  button {
+    padding: 14px;
+    font-size: 16px;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+  }
+  
+  button:hover {
+    background-color: #0056b3; /* Đổi màu khi hover */
+    transform: translateY(-2px); /* Tạo hiệu ứng nâng nút lên khi hover */
+  }
+  
+  button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
+  
+  .login-link {
+    margin-top: 25px; /* Khoảng cách lớn hơn giữa form và link */
+    font-size: 14px;
+    color: #777;
+  }
+  
+  .login-link a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .login-link a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 600px) {
+    .register-container {
+      padding: 30px; /* Giảm padding cho màn hình nhỏ */
+      max-width: 90%; /* Giảm chiều rộng container trên thiết bị nhỏ */
+    }
+  
+    h2 {
+      font-size: 26px; /* Giảm kích thước tiêu đề cho màn hình nhỏ */
+    }
+  
+    input,
+    button {
+      font-size: 14px; /* Giảm kích thước font trong các input và button */
+    }
+  
+    button {
+      padding: 12px; /* Giảm padding button trên thiết bị di động */
+    }
+  }
+  

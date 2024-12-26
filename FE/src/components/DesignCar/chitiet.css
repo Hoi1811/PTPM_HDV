@@ -1,0 +1,341 @@
+.container_car {
+  margin: 0 150px;
+}
+
+.car-detail {
+  /* max-width: 800px; Chiều rộng tối đa */
+  width: 100%;
+  /* Chiều rộng chiếm toàn bộ nếu nhỏ hơn max-width */
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* Hiệu ứng đổ bóng */
+  margin-top: 150px;
+}
+
+.car-detail__image {
+  width: 100%;
+  /* Chiều rộng 100% của container */
+  height: 300px;
+  /* Chiều cao cố định */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eaeaea;
+  /* Màu nền nếu ảnh không tải được */
+  border-radius: 8px;
+  /* Bo góc khung ảnh */
+  overflow: hidden;
+  /* Ẩn các phần ảnh vượt khung */
+}
+
+.car-detail__image img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  /* Đảm bảo ảnh co dãn phù hợp mà không bị cắt */
+}
+
+.car-detail__header {
+  flex: 2;
+}
+
+.car-detail__header h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #1a73e8;
+}
+
+.car-detail__header p {
+  font-size: 20px;
+  font-weight: 500;
+  color: #666;
+  margin: 5px 0;
+}
+
+.car-detail__header button {
+  margin-top: 20px;
+  padding: 10px 24px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+  margin-left: 40px;
+}
+
+.car-detail__header button:hover {
+  background-color: #0056b3;
+}
+
+.car-detail__details {
+  margin-top: 30px;
+}
+
+.car-detail__details table {
+  width: 100%;
+  margin-top: 16px;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+}
+
+.car-detail__details th,
+.car-detail__details td {
+  padding: 16px;
+  text-align: left;
+  border: 1px solid #ccc;
+}
+
+.car-detail__details th {
+  background-color: #e9ecef;
+  font-weight: bold;
+  color: #333;
+}
+
+.car-detail__details td {
+  color: #555;
+}
+
+.car-detail__details tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.specification-row {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 10px 16px;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  justify-content: space-between;
+}
+
+.specification-row span {
+  margin-left: 12px;
+}
+
+.specification-row:hover {
+  background-color: #eef2ff;
+}
+
+.specification-row span:last-child {
+  font-size: 24px;
+  font-weight: bold;
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.specification-row span:last-child:hover {
+  color: #0056b3;
+}
+
+.specification-attributes {
+  display: none;
+  margin-left: 20px;
+  padding-left: 10px;
+}
+
+.specification-attributes.show {
+  display: block;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 30px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  font-size: 16px;
+}
+
+.modal-title {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.modal-footer button {
+  padding: 12px 24px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-footer button:hover {
+  background-color: #0056b3;
+}
+
+.search-result {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  align-items: center;
+  background-color: #fafafa;
+  transition: background-color 0.3s ease;
+}
+
+.search-result:hover {
+  background-color: #f1f1f1;
+}
+
+.comparison-car {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.comparison-car:hover {
+  background-color: #fafafa;
+}
+
+.comparison-car button {
+  padding: 8px 16px;
+  background-color: #e53e3e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.comparison-car button:hover {
+  background-color: #c53030;
+}
+
+button:disabled {
+  background-color: #d3d3d3;
+  cursor: not-allowed;
+}
+
+/* Styling for the detail table */
+.car-detail__details table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.car-detail__details th,
+.car-detail__details td {
+  padding: 20px;
+  text-align: left;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.car-detail__details th {
+  background-color: #f1f3f5;
+  font-weight: bold;
+  color: #333;
+}
+
+.car-detail__details td {
+  color: #555;
+}
+
+.car-detail__details tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+/* Styling for the comparison table */
+.comparison-table {
+  width: 95%;
+  margin: 30px auto;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 16px;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.comparison-table th {
+  background-color: #f1f3f5;
+  font-weight: bold;
+  color: #333;
+}
+
+.comparison-table td {
+  font-size: 15px;
+  color: #555;
+}
+
+.comparison-table tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+
+.close-comparison-btn {
+  padding: 14px 28px;
+  background-color: #e53e3e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  align-self: flex-end;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.close-comparison-btn:hover {
+  background-color: #c53030;
+}
+
+button.close-comparison-btn {
+  padding: 12px 24px;
+  background-color: #e53e3e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+button.close-comparison-btn:hover {
+  background-color: #c53030;
+}
+
+/* Viết lại */

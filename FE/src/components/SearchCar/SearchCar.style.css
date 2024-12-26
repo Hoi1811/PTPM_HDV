@@ -1,0 +1,172 @@
+/* Ghi đè các thuộc tính của .css-1oqqzyl-MuiContainer-root */
+.css-1oqqzyl-MuiContainer-root {
+    width: auto !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    display: block !important;
+  }
+  
+  /* Áp dụng style cho .search */
+  .search {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    position: relative !important;
+    z-index: 10 !important;
+    margin: 5px auto !important;
+    width: 100% !important;
+    max-width: 600px !important;
+  }
+  
+.search__box {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 4px 10px; /* Thu gọn padding để tối ưu không gian */
+    border-radius: 24px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Tăng độ mượt cho bóng */
+    width: 100%;
+    gap: 12px;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    margin-left: 100px;
+    margin-right: 20px;
+}
+
+.search__box:hover {
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.25); /* Hiệu ứng hover */
+    transform: translateY(-2px); /* Nhấn mạnh hiệu ứng hover */
+}
+
+.search__box h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: #444;
+    white-space: nowrap;
+}
+
+.search__input {
+    flex: 1;
+    /* border: px solid #ccc; */
+    outline: none;
+    font-size: 14px;
+    padding: 4px 8px; /* Thu gọn padding */
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    
+}
+
+.search__input:focus {
+    border-color: #007bff; /* Đổi màu viền khi focus */
+    background-color: #fff; /* Nổi bật input khi nhập liệu */
+}
+
+.search__btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 4px 12px; /* Thu gọn padding để nút gọn hơn */
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.search__btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.08); /* Tăng nhẹ kích thước khi hover */
+}
+
+.search__btn:disabled {
+    background-color: #d6e7f3;
+}
+/* Bảng kết quả tìm kiếm */
+
+.table-container {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 20%;
+    top:50px;
+   
+    transform: translateX(-5%);
+    max-width: 600px;
+    background: #ffffff; /* Nền trắng hiện đại */
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2); /* Bóng đổ rõ nét */
+    z-index: 20;
+    overflow: hidden;
+}
+
+/* Nút đóng */
+.close-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #e63946; /* Nhấn mạnh nút đóng */
+}
+
+/* Bảng */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: #ffffff;
+    color: #333; /* Chữ màu tối dễ đọc */
+}
+
+.table th {
+    background-color: #003366; /* Xanh đậm */
+    color: #ffffff; /* Chữ trắng nổi bật */
+    text-align: left;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+.table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Hàng chẵn màu xám nhạt */
+}
+
+.table tr:nth-child(odd) {
+    background-color: #ffffff; /* Hàng lẻ màu trắng */
+}
+
+.table tr:hover {
+    background-color: #e0f3ff; /* Hover màu xanh lam nhạt */
+}
+
+/* Nút xem chi tiết */
+.detail-btn {
+    background-color: #0066cc; /* Xanh dương */
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.detail-btn:hover {
+    background-color: #004c99;
+    transform: scale(1.05); /* Phóng nhẹ */
+}

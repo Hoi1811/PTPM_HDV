@@ -1,0 +1,132 @@
+// CarList.scss
+
+// Màu sắc chung
+$primary-color: #007bff;
+$secondary-color: #f9f9f9;
+$hover-color: #0056b3;
+$text-color: #333;
+$error-color: #e74c3c;
+$border-color: #ddd;
+$shadow-color: rgba(0, 0, 0, 0.1);
+$light-gray: #f5f5f5;
+
+// Thiết lập chung cho toàn bộ danh sách ô tô
+.car-list {
+  background-color: #fff;  // Nền trắng
+  padding: 20px;  // Giảm padding để danh sách không quá rộng
+  border-radius: 8px;  // Bo góc nhẹ
+  box-shadow: 0 4px 10px $shadow-color;  // Bóng nhẹ cho phần content
+  margin-top: 20px;
+}
+
+// Phần tiêu đề
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+
+  h2 {
+    font-size: 20px;  // Giảm kích thước chữ tiêu đề
+    font-weight: bold;
+    color: $text-color;  // Chữ màu đen
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 12px;  // Giảm kích thước chữ cho các phần mô tả
+    color: $text-color;
+    margin: 5px 0;
+    font-weight: 400;
+  }
+}
+
+// Danh sách các ô tô
+.car-list ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+// Mỗi mục ô tô trong danh sách
+.car-item {
+  background-color: $secondary-color;
+  border: 1px solid $border-color;  // Border nhẹ cho mỗi item
+  border-radius: 8px;
+  padding: 10px 15px;  // Giảm padding để chiều cao nhỏ lại
+  margin-bottom: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;  // Sử dụng Flexbox để dễ dàng sắp xếp các phần tử theo chiều ngang
+  flex-wrap: wrap;  // Cho phép các phần tử xuống dòng nếu không đủ không gian
+  justify-content: space-between;  // Đảm bảo các phần tử được chia đều
+
+  &:hover {
+    transform: translateY(-5px);  // Hiệu ứng nâng lên khi hover
+    box-shadow: 0 8px 20px $shadow-color;  // Thêm bóng khi hover
+  }
+
+  // Các phần tử trong mỗi item
+  .car-details {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;  // Đảm bảo các chi tiết chiếm đủ chiều rộng
+    margin-bottom: 10px;
+
+    .car-name, .car-price, .car-year, .car-brand {
+      flex: 1;  // Mỗi phần tử chiếm đều không gian
+      text-align: center;  // Căn giữa các phần tử
+      font-size: 12px;  // Giảm kích thước chữ cho các thông tin chi tiết
+      font-weight: 500;
+      color: $text-color;
+    }
+  }
+
+  // Mô tả thêm nếu có
+  .car-description {
+    font-size: 10px;  // Giảm kích thước chữ cho mô tả chi tiết
+    color: #666;  // Chữ màu xám cho các chi tiết phụ
+    text-align: center;
+  }
+}
+
+// Phần phân trang
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+
+  button {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;  // Giảm padding của nút phân trang
+    font-size: 12px;  // Giảm kích thước chữ cho nút phân trang
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    
+    &:hover {
+      background-color: $hover-color;
+      transform: scale(1.05);  // Tạo hiệu ứng phóng to khi hover
+    }
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// Phần hiển thị thông báo lỗi khi không có dữ liệu
+.error {
+  color: $error-color;
+  font-size: 12px;  // Giảm kích thước chữ cho thông báo lỗi
+  font-weight: bold;
+  text-align: center;
+  margin-top: 20px;
+}
+
+// Các phần khác
+ul {
+  padding-left: 0;
+  list-style: none;
+}
