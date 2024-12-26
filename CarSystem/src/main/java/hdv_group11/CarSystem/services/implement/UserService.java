@@ -80,6 +80,7 @@ public class UserService implements IUserService {
 
 
 
+
     @Override
     public List<UserResponseDTO> getAllUsers(String token) throws Exception {
         token = token.substring(7);
@@ -131,6 +132,17 @@ public class UserService implements IUserService {
             return userRepository.save(user);
         }
         return null;
+    }
+
+    @Override
+    public String getRole(String token) throws Exception {
+
+        String phoneNumber = jwtTokenUtil.extractPhoneNumber(token);
+        Optional<User> optionalUser = userRepository.findByPhoneNumber(phoneNumber);
+        if (optionalUser.isEmpty()) {
+            throw new Exception("User not found");
+        }
+        return optionalUser.get().getRole().getName();
     }
 
     @Override

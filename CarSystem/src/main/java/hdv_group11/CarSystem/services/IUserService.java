@@ -17,5 +17,5 @@ public interface IUserService {
     List<UserResponseDTO> getAllUsers(String token) throws Exception;
     User addUser (UserRequestDTO userRequestDTO, String token)  throws Exception;
     User updateUser (UpdateUserRequestDTO updateUserRequestDTO, String token) throws Exception;
-
+    String getRole(String token) throws Exception;
 }

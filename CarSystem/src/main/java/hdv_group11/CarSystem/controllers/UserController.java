@@ -49,11 +49,12 @@ public class UserController {
     ) throws Exception {
         try {
             String token = userService.login(userLoginDTO.phoneNumber(), userLoginDTO.password());
-            UserLoginResponseDTO userLoginResponseDTO = new UserLoginResponseDTO("Login Success", token);
+            String  role = userService.getRole(token);
+            UserLoginResponseDTO userLoginResponseDTO = new UserLoginResponseDTO("Login Success", token, role);
             return ResponseEntity.ok().body(userLoginResponseDTO);
 
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new UserLoginResponseDTO("Login Fail", e.getMessage()));
+            return ResponseEntity.badRequest().body(new UserLoginResponseDTO("Login Fail", e.getMessage(), ""));
         }
     }
 

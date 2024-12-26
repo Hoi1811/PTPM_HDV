@@ -26,6 +26,17 @@ services:
     networks:
       - carsystem-network
 
+  react-container:
+    container_name: react-container
+    build: 
+      context: .
+      dockerfile: Dockerfile.react
+    ports:
+      - 3000:80
+    restart: always
+    networks:
+      - carsystem-network
+
   mysql8-container:
     container_name: mysql8-container
     image: mysql:8.2.0

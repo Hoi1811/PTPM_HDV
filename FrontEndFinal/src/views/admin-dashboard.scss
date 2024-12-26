@@ -1,0 +1,28 @@
+.admin-dashboard {
+    position: relative;
+    display: flex;
+    flex-direction: column; /* Đặt các phần tử con theo chiều dọc */
+    width: 100%; /* Sử dụng toàn bộ chiều rộng */
+    margin: 0; /* Loại bỏ margin thừa */
+}
+
+header {
+    position: fixed; /* Giữ Header cố định trên cùng */
+    top: 0;
+    left: 0;
+    width: 100%; /* Trải rộng toàn bộ chiều ngang */
+    z-index: 1000; /* Đảm bảo Header nằm trên cùng */
+}
+
+.routes-container {
+    margin-top: 60px; /* Tạo không gian dưới Header (điều chỉnh phù hợp với chiều cao Header) */
+    background: #fff;
+    border-radius: 2px;
+    margin-left: 200px; /* Đảm bảo không bị che bởi Nav */
+    width: calc(100% - 250px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px; /* Thêm khoảng cách để nội dung không sát mép */
+}

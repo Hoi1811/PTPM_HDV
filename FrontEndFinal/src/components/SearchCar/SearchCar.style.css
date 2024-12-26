@@ -1,0 +1,154 @@
+/* Căn giữa thanh tìm kiếm */
+.search {
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+    height: 100vh; /* Đảm bảo thanh tìm kiếm chiếm toàn bộ chiều cao màn hình */
+    padding: 20px;
+}
+
+.search__box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 800px; /* Đảm bảo không vượt quá chiều rộng màn hình */
+    padding: 20px;
+}
+
+.search__box input {
+    width: 7%; /* Chiếm 7% chiều rộng màn hình */
+    min-width: 300px; /* Đảm bảo ô tìm kiếm không quá nhỏ */
+    max-width: 500px; /* Giới hạn kích thước ô tìm kiếm */
+    padding: 15px;
+    font-size: 18px; /* Tăng kích thước chữ trong ô tìm kiếm */
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.search__btn {
+    padding: 15px 30px; /* Tăng kích thước nút tìm kiếm */
+    font-size: 18px;
+    margin-left: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    height: 100%; /* Đảm bảo nút và ô tìm kiếm có chiều cao bằng nhau */
+}
+
+.search__btn:hover {
+    background-color: #0056b3;
+}
+
+/* Phần hiển thị bảng kết quả */
+.table-container {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    max-width: 700px;
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 20;
+    overflow: hidden;
+    transition: top 0.5s ease, transform 0.5s ease;
+    min-height: 200px;
+}
+
+.table-container.show {
+    top: calc(50px + 20px);
+    transform: translateX(-50%) translateY(0);
+}
+
+.error {
+    color: red;
+    text-align: center;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.detail-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.detail-btn:hover {
+    background-color: #0056b3;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    color: red;
+    cursor: pointer;
+}
+/* Container for search input and button */
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+/* Style for search input */
+.search-input {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    outline: none;
+}
+
+/* Focus effect for the input field */
+.search-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Style for search button */
+.search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Hover effect for the button */
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+/* Disabled state for the search button */
+.search-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
